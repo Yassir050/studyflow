@@ -39,3 +39,19 @@ li span {
 li button {
     margin-left: 5px;
 }
+.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+li {
+    margin: 12px 0;
+}
+
+li span {
+    margin-right: 10px;
+}
+
+li button {
+    margin-left: 5px;
+}
