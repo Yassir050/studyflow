@@ -23,3 +23,19 @@ h1 {
 p {
     margin-bottom: 25px;
 }
+.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+li {
+    margin: 12px 0;
+}
+
+li span {
+    margin-right: 10px;
+}
+
+li button {
+    margin-left: 5px;
+}
