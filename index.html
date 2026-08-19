@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>StudyFlow</title>
 
     <link rel="stylesheet" href="style.css">
@@ -11,6 +12,7 @@
 <body>
 
     <div class="container">
+
         <h1>StudyFlow</h1>
         <p>Organize your study tasks.</p>
 
@@ -18,17 +20,34 @@
             <span>Total: <strong id="totalTasks">0</strong></span>
             <span>Completed: <strong id="completedTasks">0</strong></span>
             <span>Remaining: <strong id="remainingTasks">0</strong></span>
-       </div>
-        <input type="text" placeholder="Enter a study task">
+        </div>
 
-        <button>Add Task</button>
+        <div class="task-input">
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter a study task"
+            >
 
-        <ul>
-            <li>Learn HTML</li>
-            <li>Practice Python</li>
-            <li>Learn Git & GitHub</li>
-        </ul>
+            <button id="addButton">Add Task</button>
+        </div>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search tasks..."
+        >
+
+        <div class="filters">
+            <button data-filter="all">All</button>
+            <button data-filter="completed">Completed</button>
+            <button data-filter="remaining">Remaining</button>
+        </div>
+
+        <ul id="taskList"></ul>
+
     </div>
+
     <script src="script.js"></script>
 
 </body>
