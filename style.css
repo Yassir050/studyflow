@@ -12,58 +12,7 @@ body {
 }
 
 .container {
-    max-width: 600px;
-    margin: 40px auto;
-}
-
-h1 {
-    margin-bottom: 10px;
-}
-
-p {
-    margin-bottom: 25px;
-}
-.completed {
-    text-decoration: line-through;
-    opacity: 0.5;
-}
-
-li {
-    margin: 12px 0;
-}
-
-li span {
-    margin-right: 10px;
-}
-
-li button {
-    margin-left: 5px;
-}
-.completed {
-    text-decoration: line-through;
-    opacity: 0.5;
-}
-
-li {
-    margin: 12px 0;
-}
-
-li span {
-    margin-right: 10px;
-}
-
-li button {
-    margin-left: 5px;
-}
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #222;
-    padding: 20px;
-}
-
-.container {
-    max-width: 600px;
+    max-width: 650px;
     margin: 40px auto;
     background: white;
     padding: 25px;
@@ -75,11 +24,43 @@ h1 {
     margin-bottom: 8px;
 }
 
+p {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stats span {
+    background: #f1f3f5;
+    padding: 10px;
+    border-radius: 8px;
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+}
+
+.task-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
 input {
-    width: 70%;
+    width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
+    font-size: 15px;
+}
+
+#addButton {
+    white-space: nowrap;
 }
 
 button {
@@ -87,13 +68,45 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    background: #222;
+    color: white;
 }
 
-li {
-    margin: 12px 0;
-    padding: 10px;
+button:hover {
+    opacity: 0.85;
+}
+
+#searchInput {
+    margin-bottom: 15px;
+}
+
+.filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.filters button {
+    flex: 1;
+}
+
+#taskList {
+    list-style: none;
+}
+
+#taskList li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding: 12px;
     background: #f8f9fa;
     border-radius: 8px;
+}
+
+.task-text {
+    flex: 1;
+    word-break: break-word;
 }
 
 .completed {
@@ -101,6 +114,36 @@ li {
     opacity: 0.5;
 }
 
-li button {
-    margin-left: 8px;
+.task-actions {
+    display: flex;
+    gap: 5px;
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        margin: 10px auto;
+        padding: 18px;
+    }
+
+    .stats {
+        flex-direction: column;
+    }
+
+    .task-input {
+        flex-direction: column;
+    }
+
+    #taskList li {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .task-actions {
+        width: 100%;
+    }
+
+    .task-actions button {
+        flex: 1;
+    }
 }
