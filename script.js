@@ -1,6 +1,9 @@
 const input = document.querySelector("input");
 const button = document.querySelector("button");
 const taskList = document.querySelector("ul");
+const totalTasks = document.querySelector("#totalTasks");
+const completedTasks = document.querySelector("#completedTasks");
+const remainingTasks = document.querySelector("#remainingTasks");
 
 let tasks = JSON.parse(localStorage.getItem("studyflow-tasks")) || [];
 
@@ -10,6 +13,15 @@ function saveTasks() {
 
 function displayTasks() {
     taskList.innerHTML = "";
+
+    totalTasks.textContent = tasks.length;
+
+    const completed = tasks.filter(function (task) {
+        return task.completed;
+    }).length;
+
+    completedTasks.textContent = completed;
+    remainingTasks.textContent = tasks.length - completed;
 
     tasks.forEach(function (task, index) {
         const li = document.createElement("li");
