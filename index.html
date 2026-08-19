@@ -4,49 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>StudyFlow</title>
+    <title>StudyFlow - Study Task Manager</title>
+
+    <meta
+        name="description"
+        content="StudyFlow is a simple study task manager built with HTML, CSS and JavaScript."
+    >
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <main class="container">
 
-        <h1>StudyFlow</h1>
-        <p>Organize your study tasks.</p>
+        <header class="header">
+            <div>
+                <h1>StudyFlow 📚</h1>
+                <p>Organize your study tasks and stay productive.</p>
+            </div>
 
-        <div class="stats">
-            <span>Total: <strong id="totalTasks">0</strong></span>
-            <span>Completed: <strong id="completedTasks">0</strong></span>
-            <span>Remaining: <strong id="remainingTasks">0</strong></span>
-        </div>
+            <button id="themeButton" class="theme-button">
+                🌙
+            </button>
+        </header>
 
-        <div class="task-input">
+        <!-- Statistics -->
+        <section class="stats">
+
+            <div class="stat-card">
+                <span>Total</span>
+                <strong id="totalTasks">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>Completed</span>
+                <strong id="completedTasks">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>Remaining</span>
+                <strong id="remainingTasks">0</strong>
+            </div>
+
+        </section>
+
+        <!-- Add Task -->
+        <section class="task-input">
+
             <input
                 type="text"
                 id="taskInput"
-                placeholder="Enter a study task"
+                placeholder="Enter a study task..."
+                maxlength="100"
             >
 
-            <button id="addButton">Add Task</button>
-        </div>
+            <button id="addButton">
+                Add Task
+            </button>
 
+        </section>
+
+        <!-- Search -->
         <input
-            type="text"
+            type="search"
             id="searchInput"
-            placeholder="Search tasks..."
+            placeholder="🔎 Search tasks..."
         >
 
-        <div class="filters">
-            <button data-filter="all">All</button>
-            <button data-filter="completed">Completed</button>
-            <button data-filter="remaining">Remaining</button>
-        </div>
+        <!-- Filters -->
+        <nav class="filters">
 
-        <ul id="taskList"></ul>
+            <button
+                class="filter-button active"
+                data-filter="all"
+            >
+                All
+            </button>
 
-    </div>
+            <button
+                class="filter-button"
+                data-filter="completed"
+            >
+                Completed
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="remaining"
+            >
+                Remaining
+            </button>
+
+        </nav>
+
+        <!-- Tasks -->
+        <section class="tasks-section">
+
+            <ul id="taskList"></ul>
+
+            <p id="emptyMessage" class="empty-message">
+                No tasks yet. Add your first study task! 🎯
+            </p>
+
+        </section>
+
+        <footer>
+            <p>StudyFlow • Built with HTML, CSS & JavaScript</p>
+        </footer>
+
+    </main>
 
     <script src="script.js"></script>
 
