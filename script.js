@@ -8,32 +8,52 @@ const totalTasks = document.querySelector("#totalTasks");
 const completedTasks = document.querySelector("#completedTasks");
 const remainingTasks = document.querySelector("#remainingTasks");
 
-const filterButtons = document.querySelectorAll("[data-filter]");
+const emptyMessage = document.querySelector("#emptyMessage");
 
-let tasks = JSON.parse(localStorage.getItem("studyflow-tasks")) || [];
+const filterButtons = document.querySelectorAll(".filter-button");
+
+const themeButton = document.querySelector("#themeButton");
+
+let tasks =
+    JSON.parse(localStorage.getItem("studyflow-tasks")) || [];
 
 let currentFilter = "all";
 
+
+// -------------------------
+// Save Tasks
+// -------------------------
+
 function saveTasks() {
+
     localStorage.setItem(
         "studyflow-tasks",
         JSON.stringify(tasks)
     );
 }
 
+
+// -------------------------
+// Update Statistics
+// -------------------------
+
 function updateStats() {
 
-    totalTasks.textContent = tasks.length;
+    const completed =
+        tasks.filter(task => task.completed).length;
 
-    const completed = tasks.filter(function (task) {
-        return task.completed;
-    }).length;
+    totalTasks.textContent = tasks.length;
 
     completedTasks.textContent = completed;
 
     remainingTasks.textContent =
         tasks.length - completed;
 }
+
+
+// -------------------------
+// Display Tasks
+// -------------------------
 
 function displayTasks() {
 
@@ -42,88 +62,153 @@ function displayTasks() {
     const searchText =
         searchInput.value.toLowerCase().trim();
 
-    let filteredTasks = tasks.filter(function (task) {
+    const filteredTasks =
+        tasks.filter(task => {
 
-        const matchesSearch =
-            task.text.toLowerCase().includes(searchText);
+            const matchesSearch =
+                task.text
+                    .toLowerCase()
+                    .includes(searchText);
 
-        const matchesFilter =
-            currentFilter === "all" ||
-            (currentFilter === "completed" && task.completed) ||
-            (currentFilter === "remaining" && !task.completed);
+            const matchesFilter =
+                currentFilter === "all" ||
+                (currentFilter === "completed" &&
+                    task.completed) ||
+                (currentFilter === "remaining" &&
+                    !task.completed);
 
-        return matchesSearch && matchesFilter;
-    });
+            return matchesSearch && matchesFilter;
+        });
 
-    filteredTasks.forEach(function (task) {
 
-        const li = document.createElement("li");
+    filteredTasks.forEach(task => {
 
-        const text = document.createElement("span");
+        const li =
+            document.createElement("li");
+
+
+        // Task text
+        const text =
+            document.createElement("span");
 
         text.textContent = task.text;
 
-        text.classList.add("task-text");
+        text.className = "task-text";
+
 
         if (task.completed) {
             text.classList.add("completed");
         }
 
-        const actions = document.createElement("div");
 
-        actions.classList.add("task-actions");
+        // Buttons container
+        const actions =
+            document.createElement("div");
 
+        actions.className =
+            "task-actions";
+
+
+        // Complete button
         const completeButton =
             document.createElement("button");
 
         completeButton.textContent =
             task.completed ? "Undo" : "Done";
 
-        completeButton.addEventListener("click", function () {
+        completeButton.className =
+            "complete-button";
 
-            task.completed = !task.completed;
 
-            saveTasks();
+        completeButton.addEventListener(
+            "click",
+            function () {
 
-            displayTasks();
-        });
+                task.completed =
+                    !task.completed;
 
+                saveTasks();
+
+                displayTasks();
+            }
+        );
+
+
+        // Delete button
         const deleteButton =
             document.createElement("button");
 
-        deleteButton.textContent = "Delete";
+        deleteButton.textContent =
+            "Delete";
 
-        deleteButton.addEventListener("click", function () {
+        deleteButton.className =
+            "delete-button";
 
-            tasks = tasks.filter(function (item) {
-                return item.id !== task.id;
-            });
 
-            saveTasks();
+        deleteButton.addEventListener(
+            "click",
+            function () {
 
-            displayTasks();
-        });
+                tasks =
+                    tasks.filter(
+                        item => item.id !== task.id
+                    );
 
-        actions.appendChild(completeButton);
-        actions.appendChild(deleteButton);
+                saveTasks();
+
+                displayTasks();
+            }
+        );
+
+
+        actions.appendChild(
+            completeButton
+        );
+
+        actions.appendChild(
+            deleteButton
+        );
+
 
         li.appendChild(text);
+
         li.appendChild(actions);
 
         taskList.appendChild(li);
     });
 
+
     updateStats();
+
+
+    if (filteredTasks.length === 0) {
+
+        emptyMessage.style.display =
+            "block";
+
+    } else {
+
+        emptyMessage.style.display =
+            "none";
+    }
 }
+
+
+// -------------------------
+// Add Task
+// -------------------------
 
 function addTask() {
 
     const taskText =
         input.value.trim();
 
+
     if (taskText === "") {
+
         return;
     }
+
 
     const newTask = {
 
@@ -133,6 +218,7 @@ function addTask() {
 
         completed: false
     };
+
 
     tasks.push(newTask);
 
@@ -145,10 +231,20 @@ function addTask() {
     input.focus();
 }
 
+
+// -------------------------
+// Add Button
+// -------------------------
+
 addButton.addEventListener(
     "click",
     addTask
 );
+
+
+// -------------------------
+// Enter Key
+// -------------------------
 
 input.addEventListener(
     "keydown",
@@ -161,13 +257,23 @@ input.addEventListener(
     }
 );
 
+
+// -------------------------
+// Search
+// -------------------------
+
 searchInput.addEventListener(
     "input",
     displayTasks
 );
 
+
+// -------------------------
+// Filters
+// -------------------------
+
 filterButtons.forEach(
-    function (button) {
+    button => {
 
         button.addEventListener(
             "click",
@@ -176,10 +282,78 @@ filterButtons.forEach(
                 currentFilter =
                     button.dataset.filter;
 
+
+                filterButtons.forEach(
+                    btn =>
+                        btn.classList.remove(
+                            "active"
+                        )
+                );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
                 displayTasks();
             }
         );
     }
 );
+
+
+// -------------------------
+// Dark Mode
+// -------------------------
+
+themeButton.addEventListener(
+    "click",
+    function () {
+
+        document.body.classList.toggle(
+            "dark"
+        );
+
+
+        const darkMode =
+            document.body.classList.contains(
+                "dark"
+            );
+
+
+        localStorage.setItem(
+            "studyflow-dark-mode",
+            darkMode
+        );
+
+
+        themeButton.textContent =
+            darkMode ? "☀️" : "🌙";
+    }
+);
+
+
+// -------------------------
+// Load Dark Mode
+// -------------------------
+
+const savedTheme =
+    localStorage.getItem(
+        "studyflow-dark-mode"
+    );
+
+
+if (savedTheme === "true") {
+
+    document.body.classList.add("dark");
+
+    themeButton.textContent = "☀️";
+}
+
+
+// -------------------------
+// Start App
+// -------------------------
 
 displayTasks();
