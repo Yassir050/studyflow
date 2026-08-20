@@ -1,179 +1,741 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyFlow - Study Task Manager</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <meta
         name="description"
-        content="StudyFlow is a simple and modern study task manager that helps you organize tasks and stay productive."
+        content="StudyFlow is a modern multilingual study task manager that helps students organize tasks and stay productive."
     >
-    <link rel="stylesheet" href="style.css">
+
+    <meta
+        name="theme-color"
+        content="#6366f1"
+    >
+
+    <title>StudyFlow - Study Task Manager</title>
+
+    <!-- Fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Styles -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
+
 <body>
+
     <main class="container">
-        <!-- Header -->
+
+        <!-- =========================================
+             Header
+        ========================================== -->
+
         <header class="header">
+
             <div class="header-content">
-                <h1>StudyFlow <span aria-hidden="true">📚</span></h1>
-                <p>
-                    Organize your study tasks and stay productive.
-                </p>
+
+                <div class="brand">
+
+                    <div
+                        class="brand-icon"
+                        aria-hidden="true"
+                    >
+                        📚
+                    </div>
+
+                    <div class="brand-text">
+
+                        <h1>
+                            <span data-i18n="appName">
+                                StudyFlow
+                            </span>
+                        </h1>
+
+                        <p data-i18n="appDescription">
+                            Organize your study tasks and stay productive.
+                        </p>
+
+                    </div>
+
+                </div>
+
             </div>
-            <button
-                id="themeButton"
-                class="theme-button"
-                type="button"
-                aria-label="Switch to dark mode"
-                title="Toggle theme"
-            >
-                <span aria-hidden="true">🌙</span>
-            </button>
+
+
+            <div class="header-actions">
+
+                <!-- Language -->
+
+                <div class="language-switcher">
+
+                    <label
+                        for="languageSelect"
+                        class="visually-hidden"
+                        data-i18n="languageLabel"
+                    >
+                        Language
+                    </label>
+
+                    <select
+                        id="languageSelect"
+                        class="language-select"
+                        aria-label="Language"
+                    >
+
+                        <option
+                            value="en"
+                            selected
+                        >
+                            🇬🇧 English
+                        </option>
+
+                        <option value="ar">
+                            🇲🇦 العربية
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Theme -->
+
+                <button
+                    id="themeButton"
+                    class="theme-button"
+                    type="button"
+                    aria-label="Switch to dark mode"
+                    title="Toggle theme"
+                >
+
+                    <span
+                        id="themeIcon"
+                        aria-hidden="true"
+                    >
+                        🌙
+                    </span>
+
+                </button>
+
+            </div>
+
         </header>
-        <!-- Statistics -->
+
+
+        <!-- =========================================
+             Statistics
+        ========================================== -->
+
         <section
             class="stats"
             aria-label="Study task statistics"
+            data-i18n-aria="statisticsLabel"
         >
+
             <article class="stat-card">
-                <span>Total tasks</span>
+
+                <span data-i18n="totalTasks">
+                    Total tasks
+                </span>
+
                 <strong
                     id="totalTasks"
                     aria-live="polite"
                 >
                     0
                 </strong>
+
             </article>
+
+
             <article class="stat-card">
-                <span>Completed</span>
+
+                <span data-i18n="completed">
+                    Completed
+                </span>
+
                 <strong
                     id="completedTasks"
                     aria-live="polite"
                 >
                     0
                 </strong>
+
             </article>
+
+
             <article class="stat-card">
-                <span>Remaining</span>
+
+                <span data-i18n="remaining">
+                    Remaining
+                </span>
+
                 <strong
                     id="remainingTasks"
                     aria-live="polite"
                 >
                     0
                 </strong>
+
             </article>
+
         </section>
-        <!-- Add Task -->
+
+
+        <!-- =========================================
+             Add Task
+        ========================================== -->
+
         <section
-            class="task-input-section"
+            class="task-input-section glass-card"
             aria-labelledby="add-task-title"
         >
-            <h2 id="add-task-title">Add a study task</h2>
+
+            <div class="section-heading">
+
+                <div
+                    class="section-icon"
+                    aria-hidden="true"
+                >
+                    ✨
+                </div>
+
+                <div>
+
+                    <h2 id="add-task-title"
+                        data-i18n="addTaskTitle"
+                    >
+                        Add a study task
+                    </h2>
+
+                    <p data-i18n="addTaskDescription">
+                        Add something you want to study or complete.
+                    </p>
+
+                </div>
+
+            </div>
+
+
             <div class="task-input">
+
                 <label
                     for="taskInput"
                     class="visually-hidden"
+                    data-i18n="taskInputLabel"
                 >
                     Study task
                 </label>
+
                 <input
                     type="text"
                     id="taskInput"
                     name="task"
+                    data-i18n-placeholder="taskPlaceholder"
                     placeholder="Enter a study task..."
                     maxlength="100"
                     autocomplete="off"
                     enterkeyhint="done"
                 >
+
+
                 <button
                     id="addButton"
+                    class="primary-button"
                     type="button"
                 >
-                    Add Task
+
+                    <span aria-hidden="true">
+                        +
+                    </span>
+
+                    <span data-i18n="addTask">
+                        Add Task
+                    </span>
+
                 </button>
+
             </div>
+
         </section>
-        <!-- Search -->
+
+
+        <!-- =========================================
+             Search
+        ========================================== -->
+
         <section
             class="search-section"
             aria-label="Search tasks"
+            data-i18n-aria="searchLabel"
         >
+
             <label
                 for="searchInput"
                 class="visually-hidden"
+                data-i18n="searchInputLabel"
             >
                 Search tasks
             </label>
-            <input
-                type="search"
-                id="searchInput"
-                name="search"
-                placeholder="Search tasks..."
-                autocomplete="off"
-                enterkeyhint="search"
-            >
+
+            <div class="search-wrapper">
+
+                <span
+                    class="search-icon"
+                    aria-hidden="true"
+                >
+                    🔎
+                </span>
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    name="search"
+                    data-i18n-placeholder="searchPlaceholder"
+                    placeholder="Search tasks..."
+                    autocomplete="off"
+                    enterkeyhint="search"
+                >
+
+            </div>
+
         </section>
-        <!-- Filters -->
+
+
+        <!-- =========================================
+             Filters
+        ========================================== -->
+
         <nav
             class="filters"
             aria-label="Filter tasks"
+            data-i18n-aria="filtersLabel"
         >
+
             <button
                 type="button"
                 class="filter-button active"
                 data-filter="all"
                 aria-pressed="true"
             >
-                All
+
+                <span
+                    aria-hidden="true"
+                >
+                    📋
+                </span>
+
+                <span data-i18n="all">
+                    All
+                </span>
+
             </button>
+
+
             <button
                 type="button"
                 class="filter-button"
                 data-filter="completed"
                 aria-pressed="false"
             >
-                Completed
+
+                <span
+                    aria-hidden="true"
+                >
+                    ✅
+                </span>
+
+                <span data-i18n="completed">
+                    Completed
+                </span>
+
             </button>
+
+
             <button
                 type="button"
                 class="filter-button"
                 data-filter="remaining"
                 aria-pressed="false"
             >
-                Remaining
+
+                <span
+                    aria-hidden="true"
+                >
+                    ⏳
+                </span>
+
+                <span data-i18n="remaining">
+                    Remaining
+                </span>
+
             </button>
+
         </nav>
-        <!-- Tasks -->
+
+
+        <!-- =========================================
+             Tasks
+        ========================================== -->
+
         <section
-            class="tasks-section"
+            class="tasks-section glass-card"
             aria-labelledby="tasks-title"
         >
+
             <div class="tasks-heading">
-                <h2 id="tasks-title">Your tasks</h2>
+
+                <div>
+
+                    <h2
+                        id="tasks-title"
+                        data-i18n="yourTasks"
+                    >
+                        Your tasks
+                    </h2>
+
+                    <p data-i18n="tasksDescription">
+                        Keep track of what you need to accomplish.
+                    </p>
+
+                </div>
+
             </div>
+
+
             <ul
                 id="taskList"
                 aria-live="polite"
                 aria-label="Study tasks"
+                data-i18n-aria="tasksListLabel"
             ></ul>
+
+
             <p
                 id="emptyMessage"
                 class="empty-message"
                 role="status"
             >
-                No tasks yet. Add your first study task!
-                <span aria-hidden="true">🎯</span>
+
+                <span
+                    class="empty-icon"
+                    aria-hidden="true"
+                >
+                    🎯
+                </span>
+
+                <span
+                    class="empty-title"
+                    data-i18n="emptyTitle"
+                >
+                    No tasks yet
+                </span>
+
+                <span
+                    class="empty-description"
+                    data-i18n="emptyDescription"
+                >
+                    Add your first study task to get started.
+                </span>
+
             </p>
+
         </section>
-        <!-- Footer -->
-        <footer>
+
+
+        <!-- =========================================
+             Footer
+        ========================================== -->
+
+        <footer class="footer">
+
             <p>
-                StudyFlow
-                <span aria-hidden="true">•</span>
-                Built with HTML, CSS &amp; JavaScript
+
+                <span data-i18n="footerText">
+                    StudyFlow · Built for better studying
+                </span>
+
+                <span
+                    aria-hidden="true"
+                >
+                    📚
+                </span>
+
             </p>
+
         </footer>
+
     </main>
+
+
+    <!-- =========================================
+         Translation Data
+    ========================================== -->
+
+    <script>
+
+        /*
+         * Translation dictionary.
+         *
+         * The main application JavaScript will use
+         * this object to switch between languages.
+         */
+
+        window.STUDYFLOW_TRANSLATIONS = {
+
+            en: {
+
+                appName:
+                    "StudyFlow",
+
+                appDescription:
+                    "Organize your study tasks and stay productive.",
+
+                languageLabel:
+                    "Language",
+
+                statisticsLabel:
+                    "Study task statistics",
+
+                totalTasks:
+                    "Total tasks",
+
+                completed:
+                    "Completed",
+
+                remaining:
+                    "Remaining",
+
+                addTaskTitle:
+                    "Add a study task",
+
+                addTaskDescription:
+                    "Add something you want to study or complete.",
+
+                taskInputLabel:
+                    "Study task",
+
+                taskPlaceholder:
+                    "Enter a study task...",
+
+                addTask:
+                    "Add Task",
+
+                searchLabel:
+                    "Search tasks",
+
+                searchInputLabel:
+                    "Search tasks",
+
+                searchPlaceholder:
+                    "Search tasks...",
+
+                filtersLabel:
+                    "Filter tasks",
+
+                all:
+                    "All",
+
+                yourTasks:
+                    "Your tasks",
+
+                tasksDescription:
+                    "Keep track of what you need to accomplish.",
+
+                tasksListLabel:
+                    "Study tasks",
+
+                emptyTitle:
+                    "No tasks yet",
+
+                emptyDescription:
+                    "Add your first study task to get started.",
+
+                footerText:
+                    "StudyFlow · Built for better studying",
+
+                darkMode:
+                    "Switch to dark mode",
+
+                lightMode:
+                    "Switch to light mode",
+
+                done:
+                    "Done",
+
+                undo:
+                    "Undo",
+
+                delete:
+                    "Delete",
+
+                noSearchResults:
+                    "No tasks match your search.",
+
+                noCompletedTasks:
+                    "No completed tasks yet.",
+
+                noRemainingTasks:
+                    "No remaining tasks.",
+
+                taskAdded:
+                    "Task added",
+
+                taskDeleted:
+                    "Task deleted",
+
+                taskCompleted:
+                    "Task completed",
+
+                taskRestored:
+                    "Task restored"
+
+            },
+
+
+            ar: {
+
+                appName:
+                    "ستادي فلو",
+
+                appDescription:
+                    "نظّم مهامك الدراسية وحافظ على إنتاجيتك.",
+
+                languageLabel:
+                    "اللغة",
+
+                statisticsLabel:
+                    "إحصائيات المهام الدراسية",
+
+                totalTasks:
+                    "إجمالي المهام",
+
+                completed:
+                    "مكتملة",
+
+                remaining:
+                    "متبقية",
+
+                addTaskTitle:
+                    "أضف مهمة دراسية",
+
+                addTaskDescription:
+                    "أضف شيئًا تريد دراسته أو إنجازه.",
+
+                taskInputLabel:
+                    "المهمة الدراسية",
+
+                taskPlaceholder:
+                    "اكتب مهمة دراسية...",
+
+                addTask:
+                    "إضافة مهمة",
+
+                searchLabel:
+                    "البحث عن المهام",
+
+                searchInputLabel:
+                    "البحث عن المهام",
+
+                searchPlaceholder:
+                    "ابحث عن مهمة...",
+
+                filtersLabel:
+                    "تصفية المهام",
+
+                all:
+                    "الكل",
+
+                yourTasks:
+                    "مهامك",
+
+                tasksDescription:
+                    "تابع المهام التي تحتاج إلى إنجازها.",
+
+                tasksListLabel:
+                    "المهام الدراسية",
+
+                emptyTitle:
+                    "لا توجد مهام بعد",
+
+                emptyDescription:
+                    "أضف أول مهمة دراسية للبدء.",
+
+                footerText:
+                    "StudyFlow · صُمّم لدراسة أفضل",
+
+                darkMode:
+                    "التبديل إلى الوضع الداكن",
+
+                lightMode:
+                    "التبديل إلى الوضع الفاتح",
+
+                done:
+                    "تم",
+
+                undo:
+                    "تراجع",
+
+                delete:
+                    "حذف",
+
+                noSearchResults:
+                    "لا توجد مهام تطابق بحثك.",
+
+                noCompletedTasks:
+                    "لا توجد مهام مكتملة بعد.",
+
+                noRemainingTasks:
+                    "لا توجد مهام متبقية.",
+
+                taskAdded:
+                    "تمت إضافة المهمة",
+
+                taskDeleted:
+                    "تم حذف المهمة",
+
+                taskCompleted:
+                    "تم إكمال المهمة",
+
+                taskRestored:
+                    "تمت استعادة المهمة"
+
+            }
+
+        };
+
+    </script>
+
+
+    <!-- Application -->
     <script src="script.js"></script>
+
 </body>
+
 </html>
