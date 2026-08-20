@@ -1,5 +1,5 @@
 // ========================================
-// StudyFlow - Task Manager
+// StudyFlow - Multilingual Task Manager
 // ========================================
 
 // -------------------------
@@ -17,18 +17,234 @@ const remainingTasks = document.querySelector("#remainingTasks");
 
 const emptyMessage = document.querySelector("#emptyMessage");
 const filterButtons = document.querySelectorAll(".filter-button");
+
 const themeButton = document.querySelector("#themeButton");
+const themeIcon = document.querySelector("#themeIcon");
+
+const languageSelect =
+    document.querySelector("#languageSelect");
+
+
+// -------------------------
+// App Configuration
+// -------------------------
+
+const STORAGE_KEY = "studyflow-tasks";
+const THEME_KEY = "studyflow-dark-mode";
+const LANGUAGE_KEY = "studyflow-language";
+
+const DEFAULT_LANGUAGE = "en";
 
 
 // -------------------------
 // App State
 // -------------------------
 
-const STORAGE_KEY = "studyflow-tasks";
-const THEME_KEY = "studyflow-dark-mode";
-
 let tasks = loadTasks();
+
 let currentFilter = "all";
+
+let currentLanguage =
+    loadLanguage();
+
+
+// -------------------------
+// Translation Helper
+// -------------------------
+
+function t(key) {
+
+    const translations =
+        window.STUDYFLOW_TRANSLATIONS;
+
+    if (
+        !translations ||
+        !translations[currentLanguage]
+    ) {
+        return key;
+    }
+
+    return (
+        translations[currentLanguage][key] ||
+        key
+    );
+}
+
+
+// -------------------------
+// Load Language
+// -------------------------
+
+function loadLanguage() {
+
+    const savedLanguage =
+        localStorage.getItem(LANGUAGE_KEY);
+
+    if (
+        savedLanguage === "en" ||
+        savedLanguage === "ar"
+    ) {
+        return savedLanguage;
+    }
+
+    return DEFAULT_LANGUAGE;
+}
+
+
+// -------------------------
+// Save Language
+// -------------------------
+
+function saveLanguage(language) {
+
+    localStorage.setItem(
+        LANGUAGE_KEY,
+        language
+    );
+}
+
+
+// -------------------------
+// Apply Language
+// -------------------------
+
+function applyLanguage(language) {
+
+    if (
+        language !== "en" &&
+        language !== "ar"
+    ) {
+        language = DEFAULT_LANGUAGE;
+    }
+
+
+    currentLanguage = language;
+
+    saveLanguage(language);
+
+
+    // -------------------------
+    // Document direction
+    // -------------------------
+
+    document.documentElement.lang =
+        language;
+
+    document.documentElement.dir =
+        language === "ar"
+            ? "rtl"
+            : "ltr";
+
+
+    // -------------------------
+    // Font
+    // -------------------------
+
+    document.body.classList.toggle(
+        "arabic",
+        language === "ar"
+    );
+
+
+    // -------------------------
+    // Selected language
+    // -------------------------
+
+    if (languageSelect) {
+
+        languageSelect.value =
+            language;
+
+        languageSelect.setAttribute(
+            "aria-label",
+            t("languageLabel")
+        );
+    }
+
+
+    // -------------------------
+    // Normal text
+    // -------------------------
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(element => {
+
+            const key =
+                element.dataset.i18n;
+
+            element.textContent =
+                t(key);
+        });
+
+
+    // -------------------------
+    // Placeholders
+    // -------------------------
+
+    document
+        .querySelectorAll("[data-i18n-placeholder]")
+        .forEach(element => {
+
+            const key =
+                element.dataset.i18nPlaceholder;
+
+            element.placeholder =
+                t(key);
+        });
+
+
+    // -------------------------
+    // ARIA labels
+    // -------------------------
+
+    document
+        .querySelectorAll("[data-i18n-aria]")
+        .forEach(element => {
+
+            const key =
+                element.dataset.i18nAria;
+
+            element.setAttribute(
+                "aria-label",
+                t(key)
+            );
+        });
+
+
+    // -------------------------
+    // Theme button
+    // -------------------------
+
+    updateThemeButton(
+        document.body.classList.contains("dark")
+    );
+
+
+    // -------------------------
+    // Refresh dynamic tasks
+    // -------------------------
+
+    displayTasks();
+}
+
+
+// -------------------------
+// Language Selector
+// -------------------------
+
+if (languageSelect) {
+
+    languageSelect.addEventListener(
+        "change",
+        event => {
+
+            applyLanguage(
+                event.target.value
+            );
+        }
+    );
+}
 
 
 // -------------------------
@@ -36,27 +252,46 @@ let currentFilter = "all";
 // -------------------------
 
 function loadTasks() {
+
     try {
-        const savedTasks = localStorage.getItem(STORAGE_KEY);
+
+        const savedTasks =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
 
         if (!savedTasks) {
             return [];
         }
 
-        const parsedTasks = JSON.parse(savedTasks);
+
+        const parsedTasks =
+            JSON.parse(savedTasks);
+
 
         if (!Array.isArray(parsedTasks)) {
             return [];
         }
 
-        return parsedTasks.filter(task =>
-            task &&
-            typeof task.text === "string" &&
-            typeof task.completed === "boolean"
-        );
+
+        return parsedTasks.filter(task => {
+
+            return (
+                task &&
+                typeof task.text === "string" &&
+                typeof task.completed === "boolean"
+            );
+
+        });
 
     } catch (error) {
-        console.error("Could not load StudyFlow tasks:", error);
+
+        console.error(
+            "Could not load StudyFlow tasks:",
+            error
+        );
+
         return [];
     }
 }
@@ -67,13 +302,20 @@ function loadTasks() {
 // -------------------------
 
 function saveTasks() {
+
     try {
+
         localStorage.setItem(
             STORAGE_KEY,
             JSON.stringify(tasks)
         );
+
     } catch (error) {
-        console.error("Could not save StudyFlow tasks:", error);
+
+        console.error(
+            "Could not save StudyFlow tasks:",
+            error
+        );
     }
 }
 
@@ -85,19 +327,28 @@ function saveTasks() {
 function updateStats() {
 
     const completed =
-        tasks.filter(task => task.completed).length;
+        tasks.filter(
+            task => task.completed
+        ).length;
+
 
     const remaining =
         tasks.length - completed;
 
-    totalTasks.textContent = tasks.length;
-    completedTasks.textContent = completed;
-    remainingTasks.textContent = remaining;
+
+    totalTasks.textContent =
+        tasks.length;
+
+    completedTasks.textContent =
+        completed;
+
+    remainingTasks.textContent =
+        remaining;
 }
 
 
 // -------------------------
-// Create Task Button
+// Create Action Button
 // -------------------------
 
 function createActionButton(
@@ -110,14 +361,143 @@ function createActionButton(
     const button =
         document.createElement("button");
 
-    button.type = "button";
-    button.textContent = text;
-    button.className = className;
-    button.setAttribute("aria-label", label);
 
-    button.addEventListener("click", onClick);
+    button.type =
+        "button";
+
+
+    button.textContent =
+        text;
+
+
+    button.className =
+        className;
+
+
+    button.setAttribute(
+        "aria-label",
+        label
+    );
+
+
+    button.addEventListener(
+        "click",
+        onClick
+    );
+
 
     return button;
+}
+
+
+// -------------------------
+// Get Empty State
+// -------------------------
+
+function updateEmptyMessage(
+    filteredTasks
+) {
+
+    const emptyIcon =
+        emptyMessage.querySelector(
+            ".empty-icon"
+        );
+
+    const emptyTitle =
+        emptyMessage.querySelector(
+            ".empty-title"
+        );
+
+    const emptyDescription =
+        emptyMessage.querySelector(
+            ".empty-description"
+        );
+
+
+    if (filteredTasks.length > 0) {
+
+        emptyMessage.style.display =
+            "none";
+
+        return;
+    }
+
+
+    emptyMessage.style.display =
+        "flex";
+
+
+    // -------------------------
+    // No tasks at all
+    // -------------------------
+
+    if (tasks.length === 0) {
+
+        if (emptyIcon) {
+            emptyIcon.textContent = "🎯";
+        }
+
+        if (emptyTitle) {
+            emptyTitle.textContent =
+                t("emptyTitle");
+        }
+
+        if (emptyDescription) {
+            emptyDescription.textContent =
+                t("emptyDescription");
+        }
+
+        return;
+    }
+
+
+    // -------------------------
+    // Search / filter results
+    // -------------------------
+
+    if (emptyIcon) {
+        emptyIcon.textContent = "🔎";
+    }
+
+
+    if (emptyTitle) {
+
+        if (
+            searchInput.value
+                .trim()
+                .length > 0
+        ) {
+
+            emptyTitle.textContent =
+                t("noSearchResults");
+
+        } else if (
+            currentFilter === "completed"
+        ) {
+
+            emptyTitle.textContent =
+                t("noCompletedTasks");
+
+        } else if (
+            currentFilter === "remaining"
+        ) {
+
+            emptyTitle.textContent =
+                t("noRemainingTasks");
+
+        } else {
+
+            emptyTitle.textContent =
+                t("noSearchResults");
+        }
+    }
+
+
+    if (emptyDescription) {
+
+        emptyDescription.textContent =
+            "";
+    }
 }
 
 
@@ -129,8 +509,12 @@ function displayTasks() {
 
     taskList.replaceChildren();
 
+
     const searchText =
-        searchInput.value.toLowerCase().trim();
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
 
     const filteredTasks =
         tasks.filter(task => {
@@ -140,27 +524,40 @@ function displayTasks() {
                     .toLowerCase()
                     .includes(searchText);
 
+
             const matchesFilter =
                 currentFilter === "all" ||
+
                 (
                     currentFilter === "completed" &&
                     task.completed
                 ) ||
+
                 (
                     currentFilter === "remaining" &&
                     !task.completed
                 );
 
-            return matchesSearch && matchesFilter;
+
+            return (
+                matchesSearch &&
+                matchesFilter
+            );
         });
 
+
+    // -------------------------
+    // Create task elements
+    // -------------------------
 
     filteredTasks.forEach(task => {
 
         const li =
             document.createElement("li");
 
-        li.className = "task-item";
+
+        li.className =
+            "task-item";
 
 
         // -------------------------
@@ -170,11 +567,20 @@ function displayTasks() {
         const text =
             document.createElement("span");
 
-        text.textContent = task.text;
-        text.className = "task-text";
+
+        text.textContent =
+            task.text;
+
+
+        text.className =
+            "task-text";
+
 
         if (task.completed) {
-            text.classList.add("completed");
+
+            text.classList.add(
+                "completed"
+            );
         }
 
 
@@ -185,42 +591,65 @@ function displayTasks() {
         const actions =
             document.createElement("div");
 
-        actions.className = "task-actions";
+
+        actions.className =
+            "task-actions";
 
 
+        // -------------------------
         // Complete / Undo
+        // -------------------------
+
         const completeButton =
             createActionButton(
-                task.completed ? "Undo" : "Done",
-                "complete-button",
+
                 task.completed
-                    ? `Mark "${task.text}" as incomplete`
-                    : `Mark "${task.text}" as completed`,
+                    ? `↩ ${t("undo")}`
+                    : `✓ ${t("done")}`,
+
+                "complete-button",
+
+                task.completed
+                    ? `${t("undo")}: ${task.text}`
+                    : `${t("done")}: ${task.text}`,
+
                 () => {
 
                     task.completed =
                         !task.completed;
 
+
                     saveTasks();
+
                     displayTasks();
                 }
             );
 
 
+        // -------------------------
         // Delete
+        // -------------------------
+
         const deleteButton =
             createActionButton(
-                "Delete",
+
+                `🗑 ${t("delete")}`,
+
                 "delete-button",
-                `Delete "${task.text}"`,
+
+                `${t("delete")}: ${task.text}`,
+
                 () => {
 
                     tasks =
                         tasks.filter(
-                            item => item.id !== task.id
+                            item =>
+                                item.id !== task.id
                         );
 
+
                     saveTasks();
+
                     displayTasks();
                 }
             );
@@ -237,9 +666,14 @@ function displayTasks() {
             actions
         );
 
+
         taskList.appendChild(li);
     });
 
+
+    // -------------------------
+    // Statistics
+    // -------------------------
 
     updateStats();
 
@@ -248,25 +682,9 @@ function displayTasks() {
     // Empty State
     // -------------------------
 
-    if (filteredTasks.length === 0) {
-
-        emptyMessage.style.display = "block";
-
-        if (tasks.length > 0) {
-
-            emptyMessage.textContent =
-                "No tasks match your current search or filter.";
-
-        } else {
-
-            emptyMessage.textContent =
-                "No tasks yet. Add your first study task! 🎯";
-        }
-
-    } else {
-
-        emptyMessage.style.display = "none";
-    }
+    updateEmptyMessage(
+        filteredTasks
+    );
 }
 
 
@@ -281,7 +699,9 @@ function addTask() {
 
 
     if (!taskText) {
+
         input.focus();
+
         return;
     }
 
@@ -293,19 +713,24 @@ function addTask() {
                 .toString(36)
                 .slice(2, 8)}`,
 
-        text: taskText,
+        text:
+            taskText,
 
-        completed: false
+        completed:
+            false
     };
 
 
     tasks.push(newTask);
 
+
     saveTasks();
+
     displayTasks();
 
 
     input.value = "";
+
     input.focus();
 }
 
@@ -328,9 +753,12 @@ input.addEventListener(
     "keydown",
     event => {
 
-        if (event.key === "Enter") {
+        if (
+            event.key === "Enter"
+        ) {
 
             event.preventDefault();
+
             addTask();
         }
     }
@@ -351,63 +779,87 @@ searchInput.addEventListener(
 // Filters
 // -------------------------
 
-filterButtons.forEach(button => {
+filterButtons.forEach(
+    button => {
 
-    button.addEventListener(
-        "click",
-        () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-            currentFilter =
-                button.dataset.filter;
+                currentFilter =
+                    button.dataset.filter;
 
 
-            filterButtons.forEach(btn => {
+                filterButtons.forEach(
+                    btn => {
 
-                const isActive =
-                    btn === button;
+                        const isActive =
+                            btn === button;
 
-                btn.classList.toggle(
-                    "active",
-                    isActive
+
+                        btn.classList.toggle(
+                            "active",
+                            isActive
+                        );
+
+
+                        btn.setAttribute(
+                            "aria-pressed",
+                            String(isActive)
+                        );
+                    }
                 );
 
-                btn.setAttribute(
-                    "aria-pressed",
-                    String(isActive)
-                );
-            });
 
-
-            displayTasks();
-        }
-    );
-});
+                displayTasks();
+            }
+        );
+    }
+);
 
 
 // -------------------------
-// Theme
+// Theme Button
 // -------------------------
 
-function updateThemeButton(isDark) {
+function updateThemeButton(
+    isDark
+) {
 
-    themeButton.textContent =
-        isDark ? "☀️" : "🌙";
+    // Keep the icon span instead
+    // of replacing the whole button.
+
+    if (themeIcon) {
+
+        themeIcon.textContent =
+            isDark
+                ? "☀️"
+                : "🌙";
+    }
+
+
+    const label =
+        isDark
+            ? t("lightMode")
+            : t("darkMode");
+
 
     themeButton.setAttribute(
         "aria-label",
-        isDark
-            ? "Switch to light mode"
-            : "Switch to dark mode"
+        label
     );
+
 
     themeButton.setAttribute(
         "title",
-        isDark
-            ? "Switch to light mode"
-            : "Switch to dark mode"
+        label
     );
 }
 
+
+// -------------------------
+// Set Theme
+// -------------------------
 
 function setTheme(isDark) {
 
@@ -416,21 +868,32 @@ function setTheme(isDark) {
         isDark
     );
 
+
     localStorage.setItem(
         THEME_KEY,
         String(isDark)
     );
 
-    updateThemeButton(isDark);
+
+    updateThemeButton(
+        isDark
+    );
 }
 
+
+// -------------------------
+// Theme Event
+// -------------------------
 
 themeButton.addEventListener(
     "click",
     () => {
 
         const isDark =
-            !document.body.classList.contains("dark");
+            !document.body.classList.contains(
+                "dark"
+            );
+
 
         setTheme(isDark);
     }
@@ -442,13 +905,20 @@ themeButton.addEventListener(
 // -------------------------
 
 const savedTheme =
-    localStorage.getItem(THEME_KEY);
+    localStorage.getItem(
+        THEME_KEY
+    );
 
-setTheme(savedTheme === "true");
+
+setTheme(
+    savedTheme === "true"
+);
 
 
 // -------------------------
-// Start App
+// Start Application
 // -------------------------
 
-displayTasks();
+applyLanguage(
+    currentLanguage
+);
