@@ -1,8 +1,8 @@
 # 📚 StudyFlow
 
-StudyFlow is a modern and responsive study task manager designed to help students organize their study tasks, track progress, and stay productive.
+StudyFlow is a modern, responsive, and multilingual study task manager designed to help students organize their study tasks, track progress, and stay productive.
 
-The project started as a simple HTML, CSS, and JavaScript application and is being developed progressively into a more complete study productivity platform.
+The project is built with vanilla HTML, CSS, and JavaScript and is progressively evolving into a complete study productivity platform.
 
 ---
 
@@ -15,212 +15,169 @@ The project started as a simple HTML, CSS, and JavaScript application and is bei
 - ↩️ Undo completed tasks
 - 🗑️ Delete tasks
 - 💾 Automatically save tasks using Local Storage
+- 🔒 Safe DOM-based task rendering
 
 ### 🔎 Search & Filters
 
-- Search tasks instantly
-- Filter by:
-  - All
-  - Completed
-  - Remaining
+- 🔍 Search tasks instantly
+- 📋 View all tasks
+- ✅ View completed tasks
+- ⏳ View remaining tasks
+- ⚡ Instant filtering without page reload
 
 ### 📊 Progress Tracking
+
+StudyFlow automatically displays:
 
 - Total tasks
 - Completed tasks
 - Remaining tasks
 
-### 🎨 User Experience
-
-- 🌙 Dark Mode
-- 📱 Responsive design
-- ⌨️ Press Enter to add a task
-- ♿ Accessibility improvements
-- 🖥️ Desktop, tablet, and mobile support
-- ⚡ Lightweight and fast
+Statistics update automatically whenever the task list changes.
 
 ---
 
-## 🛠️ Technologies
+## 🌍 Multilingual Interface
 
-Currently built with:
+StudyFlow supports two languages:
 
-- HTML5
-- CSS3
-- JavaScript
-- Local Storage
-- Git
-- GitHub
+- 🇬🇧 English
+- 🇲🇦 العربية
 
-No frontend framework or external UI library is currently required.
+### Language Features
+
+- 🔄 Instant language switching
+- ↔️ Automatic LTR / RTL layout
+- 💾 Selected language is saved locally
+- 📝 Translated interface labels
+- 🔎 Translated placeholders and messages
+- ♿ Accessible language controls
+
+### Fonts
+
+Each language uses a dedicated font for better readability:
+
+**English**
+- Inter
+
+**Arabic**
+- Cairo
+
+---
+
+## 🎨 User Interface
+
+StudyFlow uses a modern SaaS-inspired interface combining:
+
+- ✨ Glass-inspired surfaces
+- 🪟 Liquid Glass-inspired visual elements
+- 🌈 Soft gradients
+- 🌓 Light and dark themes
+- 🎯 Micro-interactions
+- 🖱️ Hover states
+- 👆 Active states
+- ⌨️ Keyboard focus states
+- 📱 Responsive layouts
+- 🍎 Apple-inspired visual simplicity
+
+The design focuses on keeping the interface clean and comfortable while adding modern visual effects.
+
+---
+
+## 🌙 Dark Mode
+
+StudyFlow includes a persistent dark mode.
+
+The selected theme is stored using Local Storage so the preference remains after refreshing the page.
+
+Supported modes:
+
+- ☀️ Light
+- 🌙 Dark
+
+The interface automatically updates colors, borders, surfaces, shadows, and interactive elements.
+
+---
+
+## ✨ Animations & Micro-interactions
+
+The interface is designed with subtle animations rather than excessive motion.
+
+Current and planned interaction effects include:
+
+- Smooth theme transitions
+- Button hover animations
+- Button press feedback
+- Card hover effects
+- Task interaction animations
+- Smooth UI state changes
+- Language transition effects
+- Reduced-motion support
+
+Animations are designed to improve feedback without distracting the user.
 
 ---
 
 ## 📱 Responsive Design
 
-StudyFlow is designed for:
+StudyFlow is designed to work across:
 
 - 📱 Smartphones
 - 📲 Tablets
 - 💻 Laptops
 - 🖥️ Desktop computers
 
-The interface automatically adapts to different screen sizes.
+The layout automatically adapts to different screen sizes.
 
----
+Special mobile optimizations include:
 
-## 🚀 How to Use
-
-1. Open StudyFlow.
-2. Enter a study task.
-3. Click **Add Task** or press **Enter**.
-4. Use **Done** to complete a task.
-5. Use **Undo** to restore a completed task.
-6. Use **Delete** to remove a task.
-7. Use the search field to find tasks.
-8. Use the filters to display specific tasks.
-9. Use the theme button to switch between light and dark mode.
-
----
-
-## 💾 Data Storage
-
-StudyFlow currently stores tasks locally in the browser using **Local Storage**.
-
-This means:
-
-- No account is required.
-- No backend is currently required.
-- Tasks are stored on the user's device.
-- Clearing browser storage can remove saved tasks.
-
-Cloud synchronization and user accounts may be introduced in a future version.
-
----
-
-## 🎯 Project Goals
-
-StudyFlow is also a practical project for developing skills in:
-
-- Front-end development
-- HTML semantics
-- CSS architecture
-- Responsive web design
-- JavaScript
-- DOM manipulation
-- Browser storage
-- Accessibility
-- Web performance
-- Testing
-- Git and GitHub
-- Software architecture
-
----
-
-## 🗺️ Roadmap
-
-### Version 1.x
-
-- [x] Basic task management
-- [x] Local Storage
-- [x] Search
-- [x] Task filters
-- [x] Statistics
-- [x] Dark Mode
-- [x] Responsive UI
-- [x] Accessibility improvements
-
-### Future Development
-
-- [ ] Improved dashboard
-- [ ] Subjects and categories
-- [ ] Study sessions
-- [ ] Progress charts
-- [ ] Deadlines and priorities
-- [ ] Notifications
-- [ ] User accounts
-- [ ] Cloud synchronization
-- [ ] Backend API
-- [ ] Database
-- [ ] Automated testing
-- [ ] CI/CD
-- [ ] AI study assistant
-- [ ] AI-powered study plans
-- [ ] RAG-based study assistance
-
----
-
-## 🔐 Security
-
-Security will be considered throughout the development process.
-
-Future versions may include:
-
-- Authentication security
-- API security
-- Input validation
-- Secure data handling
-- OWASP security practices
-
----
-
-## 🧪 Testing
-
-Automated testing will be introduced as the application grows.
-
-Planned tools include:
-
-- Vitest
-- Playwright
-
----
-
-## ⚡ Performance
-
-Performance is a development priority.
-
-Future improvements may include:
-
-- Web Vitals monitoring
-- Code splitting
-- Lazy loading
-- Asset optimization
-- Caching
-- Bundle size monitoring
+- Stacked task actions
+- Full-width buttons
+- Responsive statistics
+- Mobile-friendly spacing
+- Responsive filters
+- Touch-friendly controls
 
 ---
 
 ## ♿ Accessibility
 
-StudyFlow aims to provide an accessible experience through:
+Accessibility is considered throughout the interface.
+
+Current accessibility features include:
 
 - Semantic HTML
+- Proper labels
 - Keyboard navigation
 - Visible focus states
-- Screen-reader-friendly labels
+- `aria-label` attributes
+- `aria-live` regions
+- `aria-pressed` filter states
+- Screen-reader-friendly controls
 - Reduced-motion support
-- Appropriate interactive states
+- RTL support for Arabic
 
 ---
 
-## 📌 Project Status
+## 💾 Data Storage
 
-🚧 **Active Development**
+StudyFlow currently uses the browser's **Local Storage**.
 
-StudyFlow is currently in the early development stage.
+No account or backend is required.
 
-The project will evolve progressively as new features, architecture, testing, security, and performance improvements are introduced.
+Tasks are stored locally on the user's device.
+
+### Important
+
+Clearing browser storage may remove saved tasks.
+
+Future versions may introduce cloud synchronization and user accounts.
 
 ---
 
-## 👨‍💻 Author
+## 🛡️ Security
 
-**Yassir**
+StudyFlow currently uses DOM APIs such as:
 
----
-
-## 📄 License
-
-This project is currently intended for learning and personal use.
-
-A formal open-source license may be added in a future version.
+```javascript
+textContent
