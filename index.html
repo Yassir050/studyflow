@@ -3,119 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>StudyFlow - Study Task Manager</title>
-
     <meta
         name="description"
-        content="StudyFlow is a simple study task manager built with HTML, CSS and JavaScript."
+        content="StudyFlow is a simple and modern study task manager that helps you organize tasks and stay productive."
     >
-
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <main class="container">
-
+        <!-- Header -->
         <header class="header">
-            <div>
-                <h1>StudyFlow 📚</h1>
-                <p>Organize your study tasks and stay productive.</p>
+            <div class="header-content">
+                <h1>StudyFlow <span aria-hidden="true">📚</span></h1>
+                <p>
+                    Organize your study tasks and stay productive.
+                </p>
             </div>
-
-            <button id="themeButton" class="theme-button">
-                🌙
+            <button
+                id="themeButton"
+                class="theme-button"
+                type="button"
+                aria-label="Switch to dark mode"
+                title="Toggle theme"
+            >
+                <span aria-hidden="true">🌙</span>
             </button>
         </header>
-
         <!-- Statistics -->
-        <section class="stats">
-
-            <div class="stat-card">
-                <span>Total</span>
-                <strong id="totalTasks">0</strong>
-            </div>
-
-            <div class="stat-card">
-                <span>Completed</span>
-                <strong id="completedTasks">0</strong>
-            </div>
-
-            <div class="stat-card">
-                <span>Remaining</span>
-                <strong id="remainingTasks">0</strong>
-            </div>
-
-        </section>
-
-        <!-- Add Task -->
-        <section class="task-input">
-
-            <input
-                type="text"
-                id="taskInput"
-                placeholder="Enter a study task..."
-                maxlength="100"
-            >
-
-            <button id="addButton">
-                Add Task
-            </button>
-
-        </section>
-
-        <!-- Search -->
-        <input
-            type="search"
-            id="searchInput"
-            placeholder="🔎 Search tasks..."
+        <section
+            class="stats"
+            aria-label="Study task statistics"
         >
-
+            <article class="stat-card">
+                <span>Total tasks</span>
+                <strong
+                    id="totalTasks"
+                    aria-live="polite"
+                >
+                    0
+                </strong>
+            </article>
+            <article class="stat-card">
+                <span>Completed</span>
+                <strong
+                    id="completedTasks"
+                    aria-live="polite"
+                >
+                    0
+                </strong>
+            </article>
+            <article class="stat-card">
+                <span>Remaining</span>
+                <strong
+                    id="remainingTasks"
+                    aria-live="polite"
+                >
+                    0
+                </strong>
+            </article>
+        </section>
+        <!-- Add Task -->
+        <section
+            class="task-input-section"
+            aria-labelledby="add-task-title"
+        >
+            <h2 id="add-task-title">Add a study task</h2>
+            <div class="task-input">
+                <label
+                    for="taskInput"
+                    class="visually-hidden"
+                >
+                    Study task
+                </label>
+                <input
+                    type="text"
+                    id="taskInput"
+                    name="task"
+                    placeholder="Enter a study task..."
+                    maxlength="100"
+                    autocomplete="off"
+                    enterkeyhint="done"
+                >
+                <button
+                    id="addButton"
+                    type="button"
+                >
+                    Add Task
+                </button>
+            </div>
+        </section>
+        <!-- Search -->
+        <section
+            class="search-section"
+            aria-label="Search tasks"
+        >
+            <label
+                for="searchInput"
+                class="visually-hidden"
+            >
+                Search tasks
+            </label>
+            <input
+                type="search"
+                id="searchInput"
+                name="search"
+                placeholder="Search tasks..."
+                autocomplete="off"
+                enterkeyhint="search"
+            >
+        </section>
         <!-- Filters -->
-        <nav class="filters">
-
+        <nav
+            class="filters"
+            aria-label="Filter tasks"
+        >
             <button
+                type="button"
                 class="filter-button active"
                 data-filter="all"
+                aria-pressed="true"
             >
                 All
             </button>
-
             <button
+                type="button"
                 class="filter-button"
                 data-filter="completed"
+                aria-pressed="false"
             >
                 Completed
             </button>
-
             <button
+                type="button"
                 class="filter-button"
                 data-filter="remaining"
+                aria-pressed="false"
             >
                 Remaining
             </button>
-
         </nav>
-
         <!-- Tasks -->
-        <section class="tasks-section">
-
-            <ul id="taskList"></ul>
-
-            <p id="emptyMessage" class="empty-message">
-                No tasks yet. Add your first study task! 🎯
+        <section
+            class="tasks-section"
+            aria-labelledby="tasks-title"
+        >
+            <div class="tasks-heading">
+                <h2 id="tasks-title">Your tasks</h2>
+            </div>
+            <ul
+                id="taskList"
+                aria-live="polite"
+                aria-label="Study tasks"
+            ></ul>
+            <p
+                id="emptyMessage"
+                class="empty-message"
+                role="status"
+            >
+                No tasks yet. Add your first study task!
+                <span aria-hidden="true">🎯</span>
             </p>
-
         </section>
-
+        <!-- Footer -->
         <footer>
-            <p>StudyFlow • Built with HTML, CSS & JavaScript</p>
+            <p>
+                StudyFlow
+                <span aria-hidden="true">•</span>
+                Built with HTML, CSS &amp; JavaScript
+            </p>
         </footer>
-
     </main>
-
     <script src="script.js"></script>
-
 </body>
 </html>
